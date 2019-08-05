@@ -18,10 +18,17 @@
     return (game, time )
 """
 
-def delete_space(text):
+def delete_ln(text):
     new = ""
     for char in text:        
         if char != "\n":
+            new += char
+    return new
+
+def delete_space(text):
+    new = ""
+    for char in text:        
+        if char != " ":
             new += char
     return new
 
@@ -31,10 +38,13 @@ def read(file_name,data_list):
         firstLine = True
         for line in f :
             if not firstLine:
-                data_list.addEnd(delete_space(line))
+                data_list.addEnd(delete_ln(line))
             firstLine = False
-            
-    except FileNotFoundError:
-        print("Error: archivo no encontrado.")
-    finally:
         f.close()
+        return 1
+    except FileNotFoundError:
+        
+        print("Error: archivo no encontrado.")
+        return 0
+    
+        

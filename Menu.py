@@ -1,5 +1,6 @@
 
 import curses
+from curses import textpad
 from curses.textpad import Textbox, rectangle
 from Structures.CircularList import CircularList 
 from Program import FileLoad
@@ -7,10 +8,17 @@ from Program import FileLoad
 user_list = CircularList()
 
 menu = ["1. Play", "2. Scoreboard", "3. User Selection", "4. Reports", "5. Bulk Loading"]
+x_display = 80
+y_display = 22
+user_game = "usuario" 
 
 def print_menu(stdscr, selected_row):
     stdscr.clear()
     h, w = stdscr.getmaxyx()
+
+    x1 = w//2 - x_display//2
+    y1 = h//2 - y_display//2
+    textpad.rectangle(stdscr, y1 ,x1 , y1+y_display ,x1+x_display)
 
     max_len = 0
     for i, row in enumerate(menu):
@@ -28,6 +36,7 @@ def print_menu(stdscr, selected_row):
             stdscr.addstr(y, x, row)
             stdscr.attroff(curses.color_pair(1)) 
 
+    
     stdscr.refresh()
 
 def print_user_selection(stdscr, data, user_count):
@@ -35,7 +44,7 @@ def print_user_selection(stdscr, data, user_count):
     h, w = stdscr.getmaxyx()  
     text = "<---          "+data+"          --->"
     text1 = "Users: "+ user_count
-    text2 = "Press \"Up\" to create a new user" 
+    text2 = "Press \"N\" to create a new user" 
     x = w//2 - len(text)//2
     y = h//2 
 
@@ -45,6 +54,10 @@ def print_user_selection(stdscr, data, user_count):
     x2 = w//2 - len(text2)//2
     y2 = h//2 +8
     #stdscr.attron(curses.color_pair(1))
+
+    x3 = w//2 - x_display//2
+    y3 = h//2 - y_display//2
+    textpad.rectangle(stdscr, y3 ,x3 , y3+y_display ,x3+x_display)
     
     stdscr.addstr(y, x, text)
     stdscr.addstr(y1, x1, text1)
@@ -76,19 +89,30 @@ def print_input_box(stdscr, message):
 
 def print_message(stdscr, message):
     stdscr.clear()
+    text_skip = "Press any key to continue"
     h, w = stdscr.getmaxyx()  
     x = w//2 - len(message)//2
     y = h//2 
 
-    stdscr.addstr(y, x, message)
-    stdscr.refresh()
+    x1 = w//2 - len(text_skip)//2
 
+    x3 = w//2 - x_display//2
+    y3 = h//2 - y_display//2
+    textpad.rectangle(stdscr, y3 ,x3 , y3+y_display ,x3+x_display)
+
+    stdscr.addstr(y, x, message)
+    stdscr.addstr(y +6, x1, text_skip)
+    stdscr.refresh()
+    stdscr.getch()
+
+    
 def main(stdscr):   
 
     curses.curs_set(0)
     curses.init_pair(1,curses.COLOR_CYAN, curses.COLOR_WHITE)
     selected_row = 0 
-    user_list.addEnd("user")
+    user_list.addEnd("usuario")
+    
 
     print_menu(stdscr, selected_row)
 
@@ -114,9 +138,9 @@ def main(stdscr):
                 
                 while 1:
                     key = stdscr.getch()
-                    if key == curses.KEY_ENTER or key in [10,13]:
-                        print_message(stdscr,"Se ha elegido el usuario: "+ list_data.data)
-                        stdscr.getch()
+                    if key == curses.KEY_ENTER or key in [10,13]:                        
+                        print_message(stdscr,"Selected User: "+ list_data.data)
+                        user_game = list_data.data
                         break
                         
                     elif key == curses.KEY_LEFT:
@@ -125,14 +149,14 @@ def main(stdscr):
                     elif key == curses.KEY_RIGHT:
                         list_data = list_data.next_node
                         
-                    elif key == curses.KEY_UP:
-                        user_name = print_input_box(stdscr, "Enter user name: (Press Ctr+G to save)")  
+                    elif key == 110 or key == 78:
+                        user_name = print_input_box(stdscr, "Enter user name: (Press Enter to save)")  
                         if len(user_name)  ==0:
                             print_message(stdscr,"No user added")
                         else:
                             user_list.addEnd(user_name)
                             print_message(stdscr,"The user was saved")
-                        stdscr.getch()
+                        
                     
                     print_user_selection(stdscr,list_data.data,str(user_list.size))
                     
@@ -143,14 +167,20 @@ def main(stdscr):
             elif selected_row == 3:
                 stdscr.addstr(0,0, "eligió opcion 4")
             elif selected_row == 4:
-                file_name = print_input_box(stdscr, "Enter file name: (Press Ctr+G to save)")
+                file_name = print_input_box(stdscr, "Enter file name: (Enter to continue)")
+                file_name += ".csv"
+                file_name = FileLoad.delete_space(file_name)
                 actual_user = user_list.size
-                FileLoad.read(file_name, user_list)
+
+                success = FileLoad.read(file_name, user_list)
                 if actual_user == user_list.size:
-                    print_message(stdscr,"No data added")
+                    if success == 0:
+                        print_message(stdscr,"File not found")
+                    else:
+                        print_message(stdscr,"No data added")
                 else:
                     print_message(stdscr,"The file was loaded")
-
+                
                 
             #stdscr.refresh()
             #stdscr.getch()
