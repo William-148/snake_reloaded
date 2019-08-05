@@ -7,7 +7,7 @@ class Node():
 class Queue():
     def __init__(self):
         self.head = None
-        self.end  = None
+        self.end = None
         self.size = 0
     
     def isEmpty(self):
@@ -18,7 +18,7 @@ class Queue():
         self.end = None
         self.size = 0
     
-    def enqueque(self, data):
+    def enqueue(self, data):
         
         temp = Node(data, None)
         if self.isEmpty():
@@ -36,7 +36,7 @@ class Queue():
         
         self.size += 1
     
-    def dequeque(self):
+    def dequeue(self):
         if self.isEmpty():
             return None
         
