@@ -4,10 +4,12 @@ from curses import textpad
 from curses.textpad import Textbox, rectangle
 from Structures.CircularList import CircularList 
 from Program import FileLoad
+from Program import Graphic
 
 user_list = CircularList()
 
 menu = ["1. Play", "2. Scoreboard", "3. User Selection", "4. Reports", "5. Bulk Loading"]
+report_menu = ["a. Snake Report", "b. Score Report", "c. Scoreboard Report", "d. Users Reports"]
 x_display = 80
 y_display = 22
 user_game = "usuario" 
@@ -29,6 +31,33 @@ def print_menu(stdscr, selected_row):
     for i, row in enumerate(menu):
         x = w//2 - max_len//2
         y = h//2 - len(menu)//2 + i
+        stdscr.addstr(y, x, row)
+
+        if selected_row == i:
+            stdscr.attron(curses.color_pair(1))
+            stdscr.addstr(y, x, row)
+            stdscr.attroff(curses.color_pair(1)) 
+
+    
+    stdscr.refresh()
+
+def print_reports_menu(stdscr, selected_row):
+    stdscr.clear()
+    h, w = stdscr.getmaxyx()
+
+    x1 = w//2 - x_display//2
+    y1 = h//2 - y_display//2
+    textpad.rectangle(stdscr, y1 ,x1 , y1+y_display ,x1+x_display)
+
+    max_len = 0
+    for i, row in enumerate(report_menu):
+        row_len = len(row)
+        if max_len < row_len:
+            max_len = row_len
+
+    for i, row in enumerate(report_menu):
+        x = w//2 - max_len//2
+        y = h//2 - len(report_menu)//2 + i
         stdscr.addstr(y, x, row)
 
         if selected_row == i:
@@ -87,6 +116,7 @@ def print_input_box(stdscr, message):
     input_text = box.gather()
     return input_text
 
+
 def print_message(stdscr, message):
     stdscr.clear()
     text_skip = "Press any key to continue"
@@ -105,7 +135,45 @@ def print_message(stdscr, message):
     stdscr.refresh()
     stdscr.getch()
 
-    
+def reports(stdscr):
+    selected_row = 0
+    print_reports_menu(stdscr, selected_row)
+
+    while 1:
+        key = stdscr.getch()
+        stdscr.clear()
+        
+        if key == curses.KEY_UP and selected_row > 0:
+            selected_row -= 1
+
+        elif key == curses.KEY_DOWN and selected_row < len(report_menu)-1:
+            selected_row += 1
+
+        elif key == curses.KEY_ENTER or key in [10,13]:
+            if selected_row == 0:
+                ######## SNAKE REPORT
+                print_message(stdscr,"Snake Report")
+            elif selected_row == 1:
+                ######## Score Report
+                print_message(stdscr,"Score Report")
+            elif selected_row == 2:
+                ######## ScoreBoard Report
+                print_message(stdscr,"Scoreboard Report")
+            elif selected_row == 3:
+                ######## User Report
+                ### Generar reporte de lista circular doble
+                if Graphic.graph(user_list, "userreport"):
+                    print_message(stdscr,"The report was created successfully")
+                else:
+                    print_message(stdscr,"The report could not be generated")
+
+
+        elif key == 27:
+            break
+
+        print_reports_menu(stdscr, selected_row)
+        stdscr.refresh()
+
 def main(stdscr):   
 
     curses.curs_set(0)
@@ -117,7 +185,7 @@ def main(stdscr):
     print_menu(stdscr, selected_row)
 
     while 1:
-        
+        ######################## MENU START ######################
         key = stdscr.getch()
         stdscr.clear()
         if key == curses.KEY_UP and selected_row > 0:
@@ -128,10 +196,13 @@ def main(stdscr):
 
         elif key == curses.KEY_ENTER or key in [10,13]:
             if selected_row == 0:
+                ############## OPTION 1 - PLAY GAME  ###############
                 stdscr.addstr(0,0, "eligió opcion 1")
             elif selected_row == 1:
+                ############## OPTION 2 - SCORE BOARD ###############
                 stdscr.addstr(0,0, "eligió opcion 2")
             elif selected_row == 2:
+                ############## OPTION 3 USER SELECT   ###############
                 
                 list_data = user_list.getList()
                 print_user_selection(stdscr,list_data.data, str(user_list.size))
@@ -165,8 +236,11 @@ def main(stdscr):
                 
 
             elif selected_row == 3:
-                stdscr.addstr(0,0, "eligió opcion 4")
+                ############## OPTION 4 - REPORTS   ###############
+                reports(stdscr)
+
             elif selected_row == 4:
+                ############## OPTION 5 - BULK LOADING   ###############
                 file_name = print_input_box(stdscr, "Enter file name: (Enter to continue)")
                 file_name += ".csv"
                 file_name = FileLoad.delete_space(file_name)

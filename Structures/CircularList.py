@@ -1,11 +1,5 @@
 
-class Node():
-    
-    def __init__(self, data, next_node, previous_node):
-        self.data = data
-        self.next_node = next_node
-        self.previous_node = previous_node
-
+from Structures.Node import DoubleNode
 
 class CircularList():
     def __init__(self):
@@ -23,14 +17,14 @@ class CircularList():
     
     def addFirst(self, data):
         if self.isEmpty():
-            temp = Node(data,None,None)
+            temp = DoubleNode(data,None,None)
             self.head = temp
             self.end = temp
             self.head.next_node = self.end
             self.head.previous_node = self.head
         
         else:
-            temp = Node(data, self.head,self.end)
+            temp = DoubleNode(data, self.head,self.end)
             self.head = temp
             self.head.next_node.previous_node = self.head
             self.end.next_node = self.head           
@@ -41,7 +35,7 @@ class CircularList():
         if self.isEmpty():
             self.addFirst(data)       
         else:
-            temp = Node(data, self.head, self.end)
+            temp = DoubleNode(data, self.head, self.end)
             self.end = temp
             self.end.previous_node.next_node = self.end
             self.head.previous_node = self.end
@@ -79,3 +73,6 @@ class CircularList():
             print("List is empty")
 
 
+#prieto = CircularList()
+#prieto.addFirst("holems")
+#prieto.printInicioFin()
