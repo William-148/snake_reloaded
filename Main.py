@@ -1,5 +1,6 @@
 
 import curses
+import Snake
 from curses import textpad
 from curses.textpad import Textbox, rectangle
 from Structures.CircularList import CircularList 
@@ -197,7 +198,7 @@ def main(stdscr):
         elif key == curses.KEY_ENTER or key in [10,13]:
             if selected_row == 0:
                 ############## OPTION 1 - PLAY GAME  ###############
-                stdscr.addstr(0,0, "eligió opcion 1")
+                Snake.snake(stdscr)
             elif selected_row == 1:
                 ############## OPTION 2 - SCORE BOARD ###############
                 stdscr.addstr(0,0, "eligió opcion 2")
