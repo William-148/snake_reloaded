@@ -1,4 +1,4 @@
-from Node import Node
+from Structures.Node import Node
 
 class Stack():
     def __init__(self):

@@ -2,7 +2,7 @@ import curses
 import random
 from curses import textpad
 from Structures.DoubleLinkendList import DoubleLinkedList
-from Structures.Node import DoubleNode
+from Structures.Stack import Stack
 
 x_display = 80
 y_display = 22
@@ -36,22 +36,36 @@ def create_food(snake, food,origin_x, origin_y, limit_x, limit_y):
 
 
 
-def snake(stdscr):
+def snake(stdscr, user):
     stdscr.clear()
     stdscr.nodelay(1)
     stdscr.timeout(150)
     h, w = stdscr.getmaxyx()
 
-    ##Limit of the border
+    ##Print limit of the border
     origin_x = w//2 - x_display//2
     origin_y = h//2 - y_display//2
     limit_x = origin_x + x_display 
     limit_y = origin_y + y_display
     textpad.rectangle(stdscr, origin_y ,origin_x , limit_y, limit_x)##print limits
 
+    ##Print score
+    score = Stack()
+    scoretxt = " Score : "+str(score.size)+" "
+    stdscr.addstr(origin_y, origin_x +2 , scoretxt )
+
+    ##Print Level
+    level = 1
+    leveltxt = " SNAKE RELOADED | LEVEL : 1 "
+    stdscr.addstr(origin_y, w//2 - len(leveltxt)//2 , leveltxt )
+
+    ##Print user selected
+    usertxt = " User : "+user+" "
+    stdscr.addstr(origin_y, limit_x -len(usertxt) -1 , usertxt)
+
+
     ##Direction of the snake
     direction = curses.KEY_RIGHT
-
     ##Print snake
     snake = DoubleLinkedList()
     snake.addFin((origin_x+42, origin_y+11))
@@ -61,24 +75,24 @@ def snake(stdscr):
 
     ##bocadillo
     food = DoubleLinkedList()
-    food.addFin((12,8))
+    ##Print bocadillo
+    new_food = create_food(snake,food, origin_x, origin_y, limit_x, limit_y)
+    food.addFin(new_food)
+    stdscr.addstr(new_food[1], new_food[0], food_item[new_food[2]])
 
     ##Begining the loop game
     while 1:
         key = stdscr.getch()
+        ##Control of the snake's direction
         if key in [curses.KEY_RIGHT, curses.KEY_LEFT, curses.KEY_UP, curses.KEY_DOWN]:
             if not ((direction == curses.KEY_RIGHT and key == curses.KEY_LEFT) or 
                 (direction == curses.KEY_LEFT and key == curses.KEY_RIGHT) or 
                 (direction == curses.KEY_UP and key == curses.KEY_DOWN) or
                 (direction == curses.KEY_DOWN and  key == curses.KEY_UP)):
-                direction = key
+                direction = key     
         
-        create = random.randint(0,99)
-        if create <= 20:
-            new_food = create_food(snake,food, origin_x, origin_y, limit_x, limit_y)
-            food.addFin(new_food)
-            stdscr.addstr(new_food[1], new_food[0], food_item[new_food[2]])
             
+        ##Control of snake movement    
         head = snake.head.data
         new_head = None
         if direction == curses.KEY_RIGHT:
@@ -100,9 +114,10 @@ def snake(stdscr):
             new_y = head[1]+1 
             if new_y >= limit_y:
                 new_y = origin_y+1
-            new_head = (head[0], new_y)
+            new_head = (head[0], new_y)        
         
-        ##Body
+        
+        ##Check if the route is in the snake's body, if is true, is game over
         if snake.exist(new_head):
             stdscr.clear()
             stdscr.nodelay(0)   
@@ -112,27 +127,75 @@ def snake(stdscr):
             stdscr.addstr(h//2 , w//2 - len(text)//2, text)
             break
 
+        ##Add the new snake's head to the list and print it    
         snake.addInicio(new_head)
         stdscr.addstr(new_head[1], new_head[0], snake_body)
-
+        
+        ##Remove in the list the snake's end 
         end = snake.end.data        
         stdscr.addstr(end[1], end[0], ' ')        
         snake.removeEnd()
         
-        ##Food
+        
+        ##Food     
         food_exist = food.exist(snake.head.data,True)
-        if food_exist:
+        if food_exist:            
             if food_exist[2] == 0:
                 #decrece
-                end = snake.end.data        
-                stdscr.addstr(end[1], end[0], ' ')        
-                snake.removeEnd()
+                if snake.size > 3:
+                    end = snake.end.data        
+                    stdscr.addstr(end[1], end[0], ' ')        
+                    snake.removeEnd()
+                score.pop()
+                
             else:
                 #crece
                 snake.addFin(end)
                 stdscr.addstr(end[1], end[0], snake_body)
+                score.push(food_exist)
+            
+            ##Update Score
+            scoretxt = " Score : "+str(score.size)+" "
+            stdscr.addstr(origin_y, origin_x +2 , scoretxt )
+            ##Create a new bocadillo
+            new_food = create_food(snake,food, origin_x, origin_y, limit_x, limit_y)
+            food.addFin(new_food)
+            stdscr.addstr(new_food[1], new_food[0], food_item[new_food[2]])
+        
+        ##Check the score
+        if score.size == 2:
+            level +=1
+            stdscr.clear()
+            ##Messaje
+            textpad.rectangle(stdscr, origin_y ,origin_x , limit_y, limit_x)##print limits
+            messaje = "Level "+str(level)
+            stdscr.addstr(h//2, w//2 - len(messaje)//2 , messaje )
+            stdscr.timeout(1500)
+            stdscr.getch()
+            stdscr.timeout(150)
+            stdscr.clear()
+            ##Repaint borders
+            textpad.rectangle(stdscr, origin_y ,origin_x , limit_y, limit_x)##print limits
+            stdscr.addstr(origin_y, limit_x -len(usertxt) -1 , usertxt)
+            ##Update new level score
+            score.clean()
+            stdscr.addstr(origin_y, origin_x +2 , " Score: 0 ")
+            leveltxt = " SNAKE RELOADED | LEVEL : "+ str(level)+" "
+            stdscr.addstr(origin_y, w//2 - len(leveltxt)//2 , leveltxt )
+            ##Direction of the snake
+            direction = curses.KEY_RIGHT
+            ##Print snake
+            snake.clean()
+            snake.addFin((origin_x+42, origin_y+11))
+            snake.addFin((origin_x+41, origin_y+11))
+            snake.addFin((origin_x+40, origin_y+11))
+            print_snake(stdscr,snake)
+            ##Repaint Food
+            update_food = food.head.data
+            stdscr.addstr(update_food[1], update_food[0], food_item[update_food[2]])
 
     stdscr.refresh()
     stdscr.getch()
+    return (score, level)
 
 #curses.wrapper(snake)
