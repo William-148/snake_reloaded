@@ -40,7 +40,14 @@ class DoubleLinkedList():
             self.end.previous_node.next_node = self.end
             self.size+=1
 
-    
+    def reverse(self):
+        aux = self.head
+        self.clean()
+        while aux is not None:
+            self.addInicio(aux.data)
+            aux = aux.next_node
+
+
     def removeHead(self):
         if not self.isEmpty():
             if self.size == 1:
@@ -106,7 +113,7 @@ class DoubleLinkedList():
                 if previous_node == None:
                     self.removeHead()
                 elif next_node == None:
-                    self.removeEnd
+                    self.removeEnd()
                 else:
                     temp = None
                     previous_node.next_node = next_node

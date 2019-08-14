@@ -5,6 +5,8 @@ from curses import textpad
 from curses.textpad import Textbox, rectangle
 from Structures.CircularList import CircularList 
 from Structures.Queue import Queue 
+from Structures.Stack import Stack 
+from Structures.DoubleLinkendList import DoubleLinkedList 
 from Program import FileLoad
 from Program import Graphic
 
@@ -15,7 +17,7 @@ report_menu = ["a. Snake Report", "b. Score Report", "c. Scoreboard Report", "d.
 x_display = 80
 y_display = 22
 score_history = Queue()
-last_score = None
+
 
 
 def print_menu(stdscr, selected_row):
@@ -177,7 +179,7 @@ def print_message(stdscr, message):
     stdscr.refresh()
     stdscr.getch()
 
-def reports(stdscr):
+def reports(stdscr, last_scores):
     selected_row = 0
     print_reports_menu(stdscr, selected_row)
 
@@ -194,10 +196,16 @@ def reports(stdscr):
         elif key == curses.KEY_ENTER or key in [10,13]:
             if selected_row == 0:
                 ######## SNAKE REPORT
-                print_message(stdscr,"Snake Report")
+                if Graphic.graph(last_scores[2], "snake_report",Graphic.double_list):
+                    print_message(stdscr,"The report was created successfully")
+                else:
+                    print_message(stdscr,"The report could not be generated")
             elif selected_row == 1:
                 ######## Score Report
-                print_message(stdscr,"Score Report")
+                if Graphic.graph(last_scores[0], "score_report",Graphic.stack_list):
+                    print_message(stdscr,"The report was created successfully")
+                else:
+                    print_message(stdscr,"The report could not be generated")
             elif selected_row == 2:
                 ######## ScoreBoard Report
                 if Graphic.graph(score_history, "score_boar_report",Graphic.queue_list):
@@ -226,8 +234,7 @@ def main(stdscr):
     selected_row = 0 
     user_list.addEnd("usuario")
     user_game = None
-
-    
+    last_score = (Stack(), 0, DoubleLinkedList())
 
     print_menu(stdscr, selected_row)
 
@@ -295,14 +302,10 @@ def main(stdscr):
                         break
                     
                     print_user_selection(stdscr,list_data.data,str(user_list.size))
-                    
-                    
-
                 
-
             elif selected_row == 3:
                 ############## OPTION 4 - REPORTS   ###############
-                reports(stdscr)
+                reports(stdscr, last_score)
 
             elif selected_row == 4:
                 ############## OPTION 5 - BULK LOADING   ###############
@@ -321,8 +324,7 @@ def main(stdscr):
                     print_message(stdscr,"The file was loaded")
                 
                 
-            #stdscr.refresh()
-            #stdscr.getch()
+            
         print_menu(stdscr, selected_row)
         stdscr.refresh()
 
