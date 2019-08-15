@@ -7,7 +7,7 @@ from Structures.Stack import Stack
 
 x_display = 80
 y_display = 22
-max_score = 15
+max_score = 3
 speed_init = 150
 speed_plus = 10
 snake_body = '©'
@@ -125,6 +125,7 @@ def snake(stdscr, user):
         ##Pause
         elif key == 112 or key == 80:
             stdscr.timeout(-1)
+            
             pausetext = " <<<<<<<< - PAUSED - >>>>>>>> "
             resumetext= "                              "
             txtsize = len(pausetext)
@@ -138,7 +139,7 @@ def snake(stdscr, user):
                 if pause_key == 112 or key == 80:
                     stdscr.addstr(origin_y - 1, w//2 - txtsize//2 , resumetext )
                     stdscr.timeout(speed_level)
-                    break
+                    break     
 
         ##Control of snake movement    
         head = snake.head.data
@@ -172,9 +173,13 @@ def snake(stdscr, user):
             stdscr.timeout(-1)        
             textpad.rectangle(stdscr, origin_y ,origin_x , limit_y, limit_x)
             text = "Game Over!!!!"
+            text0 = "User: "+ user +"   Score: "+str(score.size + (level-1)*max_score)
             text1 = "Press 'Enter' To Main Menu"
             stdscr.addstr(h//2 , w//2 - len(text)//2, text)
+            stdscr.addstr(h//2 + 2 , w//2 - len(text0)//2, text0)
             stdscr.addstr(limit_y -3 , w//2 - len(text1)//2, text1)
+            Graphic.graph(snake, "snake_report_gameover",Graphic.double_list)
+            Graphic.graph(score, "score_report_gameover",Graphic.stack_list)  
             break
 
         ##Add the new snake's head to the list and print it    
@@ -209,9 +214,13 @@ def snake(stdscr, user):
                 stdscr.timeout(-1)        
                 textpad.rectangle(stdscr, origin_y ,origin_x , limit_y, limit_x)
                 text = "Game Over!!!!"
+                text0 = "User: "+ user +"   Score: "+str(score.size + (level-1)*max_score)
                 text1 = "Press 'Enter' To Main Menu"
                 stdscr.addstr(h//2 , w//2 - len(text)//2, text)
+                stdscr.addstr(h//2 + 2 , w//2 - len(text0)//2, text0)
                 stdscr.addstr(limit_y -3 , w//2 - len(text1)//2, text1)
+                Graphic.graph(snake, "snake_report_gameover",Graphic.double_list)
+                Graphic.graph(score, "score_report_gameover",Graphic.stack_list)  
                 break
             
             ##Update Score

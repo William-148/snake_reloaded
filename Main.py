@@ -11,7 +11,6 @@ from Program import FileLoad
 from Program import Graphic
 
 user_list = CircularList()
-
 menu = ["1. Play", "2. Scoreboard", "3. User Selection", "4. Reports", "5. Bulk Loading"]
 report_menu = ["a. Snake Report", "b. Score Report", "c. Scoreboard Report", "d. Users Reports"]
 x_display = 80
@@ -253,7 +252,7 @@ def main(stdscr):
                 ############## OPTION 1 - PLAY GAME  ###############
                 if user_game is not None:
                     last_score = Snake.snake(stdscr, user_game)
-                    score_history.enqueue((user_game, last_score[0].size + (last_score[1]-1)*15))
+                    score_history.enqueue((user_game, last_score[0].size + (last_score[1]-1)*Snake.max_score))
                     if score_history.size > 10:
                         score_history.dequeue()
                 else:
@@ -264,7 +263,7 @@ def main(stdscr):
                         user_game = user_name
                         user_list.addEnd(user_name)                        
                         last_score = Snake.snake(stdscr, user_game)
-                        score_history.enqueue((user_game, last_score[0].size + (last_score[1]-1)*15))
+                        score_history.enqueue((user_game, last_score[0].size + (last_score[1]-1)*Snake.max_score))
                         if score_history.size > 10:
                             score_history.dequeue()
 
