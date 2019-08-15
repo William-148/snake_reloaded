@@ -7,8 +7,8 @@ from Structures.Stack import Stack
 
 x_display = 80
 y_display = 22
-max_score = 3
-speed_init = 150
+max_score = 15
+speed_init = 160
 speed_plus = 10
 snake_body = '©'
 food_item = ('*','+', '█')

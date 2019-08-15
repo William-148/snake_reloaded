@@ -50,8 +50,7 @@ class CircularList():
     def getList(self):
         return self.head
 
-
-
+  
     def print(self):
         
         cont = 0
@@ -71,6 +70,23 @@ class CircularList():
         
         else:
             print("List is empty")
+
+    def exist(self, data):
+        
+        exist_data = False
+
+        if self.head is not None:
+            temp = self.head.next_node
+            if self.head.data == data:
+                exist_data == True
+            while temp is not self.head:
+                if temp.data == data:
+                    exist_data = True
+                    break
+                temp = temp.next_node
+            
+        return exist_data
+        
 
 
 #prieto = CircularList()

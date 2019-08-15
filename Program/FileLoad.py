@@ -38,7 +38,9 @@ def read(file_name,data_list):
         firstLine = True
         for line in f :
             if not firstLine:
-                data_list.addEnd(delete_ln(line))
+                text = delete_ln(line)
+                if data_list.exist(text) == False:
+                    data_list.addEnd(text)
             firstLine = False
         f.close()
         return 1
