@@ -1,26 +1,35 @@
 digraph "Doubly Circular List" {
-	n0x1d198b00940 [label="{ dao  }" shape=record]
-	n0x1d198b00af0 [label="{ pe  }" shape=record]
-	n0x1d198b00b20 [label="{ Hola Mundo 12  }" shape=record]
-	n0x1d198b00a90 [label="{ Hola Perrito  }" shape=record]
-	n0x1d198b009d0 [label="{ padrino magico  }" shape=record]
-	n0x1d198b00c10 [label="{ Chocomax din  }" shape=record]
-	n0x1d198b00e50 [label="{ pedro infante  }" shape=record]
-	n0x1d198b00d60 [label="{ Gargaro  }" shape=record]
-	n0x1d198b00940 -> n0x1d198b00af0
-	n0x1d198b00af0 -> n0x1d198b00940 [color=blue]
-	n0x1d198b00af0 -> n0x1d198b00b20
-	n0x1d198b00b20 -> n0x1d198b00af0 [color=blue]
-	n0x1d198b00b20 -> n0x1d198b00a90
-	n0x1d198b00a90 -> n0x1d198b00b20 [color=blue]
-	n0x1d198b00a90 -> n0x1d198b009d0
-	n0x1d198b009d0 -> n0x1d198b00a90 [color=blue]
-	n0x1d198b009d0 -> n0x1d198b00c10
-	n0x1d198b00c10 -> n0x1d198b009d0 [color=blue]
-	n0x1d198b00c10 -> n0x1d198b00e50
-	n0x1d198b00e50 -> n0x1d198b00c10 [color=blue]
-	n0x1d198b00e50 -> n0x1d198b00d60
-	n0x1d198b00d60 -> n0x1d198b00e50 [color=blue]
-	n0x1d198b00d60 -> n0x1d198b00940
-	n0x1d198b00940 -> n0x1d198b00d60 [color=blue]
+	n0x1849be05960 [label="{ 0|Juan }" shape=record]
+	n0x1849be05900 [label="{ 1|Doroteo }" shape=record]
+	n0x1849be058a0 [label="{ 2|Erna }" shape=record]
+	n0x1849be05840 [label="{ 3|Mier }" shape=record]
+	n0x1849be057e0 [label="{ 4|Doto }" shape=record]
+	n0x1849be05780 [label="{ 5|Manolo }" shape=record]
+	n0x1849be05720 [label="{ 6|Esmeralda }" shape=record]
+	n0x1849be056c0 [label="{ 7|Ritta }" shape=record]
+	n0x1849be05660 [label="{ 8|Cornelio }" shape=record]
+	n0x1849be05600 [label="{ 9|Parco }" shape=record]
+	n0x1849be055a0 [label="{ 10|will }" shape=record]
+	n0x1849be05960 -> n0x1849be05900
+	n0x1849be05900 -> n0x1849be05960 [color=blue]
+	n0x1849be05900 -> n0x1849be058a0
+	n0x1849be058a0 -> n0x1849be05900 [color=blue]
+	n0x1849be058a0 -> n0x1849be05840
+	n0x1849be05840 -> n0x1849be058a0 [color=blue]
+	n0x1849be05840 -> n0x1849be057e0
+	n0x1849be057e0 -> n0x1849be05840 [color=blue]
+	n0x1849be057e0 -> n0x1849be05780
+	n0x1849be05780 -> n0x1849be057e0 [color=blue]
+	n0x1849be05780 -> n0x1849be05720
+	n0x1849be05720 -> n0x1849be05780 [color=blue]
+	n0x1849be05720 -> n0x1849be056c0
+	n0x1849be056c0 -> n0x1849be05720 [color=blue]
+	n0x1849be056c0 -> n0x1849be05660
+	n0x1849be05660 -> n0x1849be056c0 [color=blue]
+	n0x1849be05660 -> n0x1849be05600
+	n0x1849be05600 -> n0x1849be05660 [color=blue]
+	n0x1849be05600 -> n0x1849be055a0
+	n0x1849be055a0 -> n0x1849be05600 [color=blue]
+	n0x1849be055a0 -> n0x1849be05960
+	n0x1849be05960 -> n0x1849be055a0 [color=blue]
 }

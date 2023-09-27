@@ -1,15 +1,18 @@
 digraph "Doubly Liked List" {
 	graph [rankdir=LR]
-	nullA0x1b40d703850 [label="{ null }" shape=record]
-	n0x1b40d7007c0 [label="{ | (86, 15) | }" shape=record]
-	n0x1b40d7008e0 [label="{ | (85, 15) | }" shape=record]
-	n0x1b40d700880 [label="{ | (84, 15) | }" shape=record]
-	nullB0x1b40d703850 [label="{ null }" shape=record]
-	n0x1b40d7007c0 -> n0x1b40d7008e0
-	n0x1b40d7008e0 -> n0x1b40d7007c0 [color=blue]
-	n0x1b40d7008e0 -> n0x1b40d700880
-	n0x1b40d700880 -> n0x1b40d7008e0 [color=blue]
-	nullA0x1b40d703850 -> n0x1b40d7007c0 [color=white]
-	n0x1b40d7007c0 -> nullA0x1b40d703850 [color=blue]
-	n0x1b40d700880 -> nullB0x1b40d703850
+	nullA0x1cac9510b20 [label="{ null }" shape=record]
+	n0x1cac9510df0 [label="{ | (36, 13) | }" shape=record]
+	n0x1cac9510f70 [label="{ | (37, 13) | }" shape=record]
+	n0x1cac9510bb0 [label="{ | (38, 13) | }" shape=record]
+	n0x1cac9510c10 [label="{ | (39, 13) | }" shape=record]
+	nullB0x1cac9510b20 [label="{ null }" shape=record]
+	n0x1cac9510df0 -> n0x1cac9510f70
+	n0x1cac9510f70 -> n0x1cac9510df0 [color=blue]
+	n0x1cac9510f70 -> n0x1cac9510bb0
+	n0x1cac9510bb0 -> n0x1cac9510f70 [color=blue]
+	n0x1cac9510bb0 -> n0x1cac9510c10
+	n0x1cac9510c10 -> n0x1cac9510bb0 [color=blue]
+	nullA0x1cac9510b20 -> n0x1cac9510df0 [color=white]
+	n0x1cac9510df0 -> nullA0x1cac9510b20 [color=blue]
+	n0x1cac9510c10 -> nullB0x1cac9510b20
 }

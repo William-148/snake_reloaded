@@ -1,18 +1,102 @@
 digraph "Doubly Liked List" {
 	graph [rankdir=LR]
-	nullA0x20c371fc820 [label="{ null }" shape=record]
-	n0x20c371fd990 [label="{ | (49, 12) | }" shape=record]
-	n0x20c371fd690 [label="{ | (50, 12) | }" shape=record]
-	n0x20c371fd6f0 [label="{ | (51, 12) | }" shape=record]
-	n0x20c371fd5d0 [label="{ | (52, 12) | }" shape=record]
-	nullB0x20c371fc820 [label="{ null }" shape=record]
-	n0x20c371fd990 -> n0x20c371fd690
-	n0x20c371fd690 -> n0x20c371fd990 [color=blue]
-	n0x20c371fd690 -> n0x20c371fd6f0
-	n0x20c371fd6f0 -> n0x20c371fd690 [color=blue]
-	n0x20c371fd6f0 -> n0x20c371fd5d0
-	n0x20c371fd5d0 -> n0x20c371fd6f0 [color=blue]
-	nullA0x20c371fc820 -> n0x20c371fd990 [color=white]
-	n0x20c371fd990 -> nullA0x20c371fc820 [color=blue]
-	n0x20c371fd5d0 -> nullB0x20c371fc820
+	nullA0x1849be052d0 [label="{ null }" shape=record]
+	n0x1849bdef700 [label="{ | (63, 15) | }" shape=record]
+	n0x1849bded570 [label="{ | (64, 15) | }" shape=record]
+	n0x1849bded2d0 [label="{ | (65, 15) | }" shape=record]
+	n0x1849bdeecb0 [label="{ | (66, 15) | }" shape=record]
+	n0x1849bdeda50 [label="{ | (67, 15) | }" shape=record]
+	n0x1849bdeef80 [label="{ | (67, 16) | }" shape=record]
+	n0x1849bded9f0 [label="{ | (67, 17) | }" shape=record]
+	n0x1849bdee350 [label="{ | (67, 18) | }" shape=record]
+	n0x1849be04610 [label="{ | (66, 18) | }" shape=record]
+	n0x1849bdef520 [label="{ | (65, 18) | }" shape=record]
+	n0x1849bded270 [label="{ | (65, 17) | }" shape=record]
+	n0x1849bded210 [label="{ | (64, 17) | }" shape=record]
+	n0x1849bdefdc0 [label="{ | (64, 16) | }" shape=record]
+	n0x1849bded930 [label="{ | (63, 16) | }" shape=record]
+	n0x1849bdef220 [label="{ | (63, 15) | }" shape=record]
+	n0x1849bded750 [label="{ | (63, 14) | }" shape=record]
+	n0x1849bdeff40 [label="{ | (63, 13) | }" shape=record]
+	n0x1849bdee6b0 [label="{ | (62, 13) | }" shape=record]
+	n0x1849bdefa00 [label="{ | (61, 13) | }" shape=record]
+	n0x1849bdef160 [label="{ | (61, 12) | }" shape=record]
+	n0x1849bdef280 [label="{ | (60, 12) | }" shape=record]
+	n0x1849bdeef20 [label="{ | (59, 12) | }" shape=record]
+	n0x1849bded5d0 [label="{ | (59, 11) | }" shape=record]
+	n0x1849bded6f0 [label="{ | (59, 10) | }" shape=record]
+	n0x1849bded510 [label="{ | (59, 9) | }" shape=record]
+	n0x1849bdee3b0 [label="{ | (58, 9) | }" shape=record]
+	n0x1849bdef880 [label="{ | (57, 9) | }" shape=record]
+	n0x1849bdedc30 [label="{ | (56, 9) | }" shape=record]
+	n0x1849bded690 [label="{ | (55, 9) | }" shape=record]
+	n0x1849bded3f0 [label="{ | (55, 10) | }" shape=record]
+	n0x1849bdedc90 [label="{ | (55, 11) | }" shape=record]
+	n0x1849bdef5e0 [label="{ | (55, 12) | }" shape=record]
+	nullB0x1849be052d0 [label="{ null }" shape=record]
+	n0x1849bdef700 -> n0x1849bded570
+	n0x1849bded570 -> n0x1849bdef700 [color=blue]
+	n0x1849bded570 -> n0x1849bded2d0
+	n0x1849bded2d0 -> n0x1849bded570 [color=blue]
+	n0x1849bded2d0 -> n0x1849bdeecb0
+	n0x1849bdeecb0 -> n0x1849bded2d0 [color=blue]
+	n0x1849bdeecb0 -> n0x1849bdeda50
+	n0x1849bdeda50 -> n0x1849bdeecb0 [color=blue]
+	n0x1849bdeda50 -> n0x1849bdeef80
+	n0x1849bdeef80 -> n0x1849bdeda50 [color=blue]
+	n0x1849bdeef80 -> n0x1849bded9f0
+	n0x1849bded9f0 -> n0x1849bdeef80 [color=blue]
+	n0x1849bded9f0 -> n0x1849bdee350
+	n0x1849bdee350 -> n0x1849bded9f0 [color=blue]
+	n0x1849bdee350 -> n0x1849be04610
+	n0x1849be04610 -> n0x1849bdee350 [color=blue]
+	n0x1849be04610 -> n0x1849bdef520
+	n0x1849bdef520 -> n0x1849be04610 [color=blue]
+	n0x1849bdef520 -> n0x1849bded270
+	n0x1849bded270 -> n0x1849bdef520 [color=blue]
+	n0x1849bded270 -> n0x1849bded210
+	n0x1849bded210 -> n0x1849bded270 [color=blue]
+	n0x1849bded210 -> n0x1849bdefdc0
+	n0x1849bdefdc0 -> n0x1849bded210 [color=blue]
+	n0x1849bdefdc0 -> n0x1849bded930
+	n0x1849bded930 -> n0x1849bdefdc0 [color=blue]
+	n0x1849bded930 -> n0x1849bdef220
+	n0x1849bdef220 -> n0x1849bded930 [color=blue]
+	n0x1849bdef220 -> n0x1849bded750
+	n0x1849bded750 -> n0x1849bdef220 [color=blue]
+	n0x1849bded750 -> n0x1849bdeff40
+	n0x1849bdeff40 -> n0x1849bded750 [color=blue]
+	n0x1849bdeff40 -> n0x1849bdee6b0
+	n0x1849bdee6b0 -> n0x1849bdeff40 [color=blue]
+	n0x1849bdee6b0 -> n0x1849bdefa00
+	n0x1849bdefa00 -> n0x1849bdee6b0 [color=blue]
+	n0x1849bdefa00 -> n0x1849bdef160
+	n0x1849bdef160 -> n0x1849bdefa00 [color=blue]
+	n0x1849bdef160 -> n0x1849bdef280
+	n0x1849bdef280 -> n0x1849bdef160 [color=blue]
+	n0x1849bdef280 -> n0x1849bdeef20
+	n0x1849bdeef20 -> n0x1849bdef280 [color=blue]
+	n0x1849bdeef20 -> n0x1849bded5d0
+	n0x1849bded5d0 -> n0x1849bdeef20 [color=blue]
+	n0x1849bded5d0 -> n0x1849bded6f0
+	n0x1849bded6f0 -> n0x1849bded5d0 [color=blue]
+	n0x1849bded6f0 -> n0x1849bded510
+	n0x1849bded510 -> n0x1849bded6f0 [color=blue]
+	n0x1849bded510 -> n0x1849bdee3b0
+	n0x1849bdee3b0 -> n0x1849bded510 [color=blue]
+	n0x1849bdee3b0 -> n0x1849bdef880
+	n0x1849bdef880 -> n0x1849bdee3b0 [color=blue]
+	n0x1849bdef880 -> n0x1849bdedc30
+	n0x1849bdedc30 -> n0x1849bdef880 [color=blue]
+	n0x1849bdedc30 -> n0x1849bded690
+	n0x1849bded690 -> n0x1849bdedc30 [color=blue]
+	n0x1849bded690 -> n0x1849bded3f0
+	n0x1849bded3f0 -> n0x1849bded690 [color=blue]
+	n0x1849bded3f0 -> n0x1849bdedc90
+	n0x1849bdedc90 -> n0x1849bded3f0 [color=blue]
+	n0x1849bdedc90 -> n0x1849bdef5e0
+	n0x1849bdef5e0 -> n0x1849bdedc90 [color=blue]
+	nullA0x1849be052d0 -> n0x1849bdef700 [color=white]
+	n0x1849bdef700 -> nullA0x1849be052d0 [color=blue]
+	n0x1849bdef5e0 -> nullB0x1849be052d0
 }

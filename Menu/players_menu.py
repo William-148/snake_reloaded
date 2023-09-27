@@ -27,15 +27,17 @@ class PlayersMenu:
         self.stdscr.clear()
         self.ctx.draw_game_board_edge()
         text1 = "Press \"N\" to create a new user"
-        text2 = "Users: " + str(total_users)
-        text3 = "No Registered Users" if current_player is None else "<---          " + current_player + "          --->"
-        text4 = "Press \"ESC\" to exit"
+        text2 = "Press \"Intro\" to select user"
+        text3 = "Users: " + str(total_users)
+        text4 = "No Registered Users" if current_player is None else "<---          " + current_player + "          --->"
+        text5 = "Press \"ESC\" to exit"
         # Drawing all text
         y = self.ctx.calculate_y_origin_from_center(0)
         self.stdscr.addstr(y - 8, self.ctx.calculate_x_origin_from_center(len(text1)), text1, curses.color_pair(Color.CYAN))
-        self.stdscr.addstr(y - 7, self.ctx.calculate_x_origin_from_center(len(text2)), text2, curses.color_pair(Color.RED))
-        self.stdscr.addstr(y, self.ctx.calculate_x_origin_from_center(len(text3)), text3, curses.color_pair(Color.GREEN))
-        self.stdscr.addstr(y + 8, self.ctx.calculate_x_origin_from_center(len(text4)), text4, curses.color_pair(Color.CYAN))
+        self.stdscr.addstr(y - 7, self.ctx.calculate_x_origin_from_center(len(text2)), text2, curses.color_pair(Color.GREEN))
+        self.stdscr.addstr(y - 6, self.ctx.calculate_x_origin_from_center(len(text3)), text3, curses.color_pair(Color.RED))
+        self.stdscr.addstr(y, self.ctx.calculate_x_origin_from_center(len(text4)), text4, curses.color_pair(Color.GREEN))
+        self.stdscr.addstr(y + 8, self.ctx.calculate_x_origin_from_center(len(text5)), text5, curses.color_pair(Color.CYAN))
         self.stdscr.refresh()
     
     def _try_to_select_player(self, player_selected: str|None) -> bool:

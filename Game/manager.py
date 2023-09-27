@@ -8,7 +8,7 @@ from Collections.stack import Stack
 from Utils.colors import Color
 from Snake.snake import Snake
 
-MAX_SCORE = 15
+MAX_SCORE_PER_LEVEL = 30
 SPEED_INIT = 160
 SPEED_PLUS = 5
 
@@ -119,23 +119,30 @@ class GameManager:
         origin_x, origin_y = self.ctx.get_game_board_origin()
         # Print score
         score_txt = " Score : " + str(self.score_stack.get_size()) + " "
-        self.stdscr.addstr(origin_y, origin_x + 2, score_txt )
+        self.stdscr.addstr(origin_y, origin_x + 2, score_txt, curses.color_pair(Color.CYAN))
 
         # Print Level
         leveltxt = " SNAKE RELOADED | LEVEL : " + str(self.current_level) + " "
-        self.stdscr.addstr(origin_y, self.ctx.calculate_x_origin_from_center(len(leveltxt)), leveltxt)
+        self.stdscr.addstr(origin_y, self.ctx.calculate_x_origin_from_center(len(leveltxt)), leveltxt, curses.color_pair(Color.MAGENTA))
 
         # Print user selected
         limit_x = origin_x + self.ctx.board_width
         usertxt = " User : " + str(self.ctx.current_player) + " "
-        self.stdscr.addstr(origin_y, limit_x - len(usertxt) - 1 , usertxt)
+        self.stdscr.addstr(origin_y, limit_x - len(usertxt) - 1 , usertxt, curses.color_pair(Color.CYAN))
+
+    def display_footer_game(self):
+        _, origin_y = self.ctx.get_game_board_origin()
+        end_y = origin_y + self.ctx.board_height
+
+        footer_txt = "-[esc] Finish Game  -[R] Reverse Direction  -[P] Pause"
+        self.stdscr.addstr(end_y + 1, self.ctx.calculate_x_origin_from_center(len(footer_txt)), footer_txt, curses.color_pair(Color.CYAN))
 
     def pause_game(self):
         self.stdscr.timeout(-1)
         pause_msg = " <<<<<<<< - PAUSED - >>>>>>>> "
         resume_msg = "                              "
         msg_size = len(pause_msg)
-        self.stdscr.addstr(self.ctx.board_origin.y - 1, self.ctx.calculate_x_origin_from_center(msg_size), pause_msg)
+        self.stdscr.addstr(self.ctx.board_origin.y - 1, self.ctx.calculate_x_origin_from_center(msg_size), pause_msg, curses.color_pair(Color.YELLOW))
 
         while 1:
             pause_key = self.stdscr.getch()
@@ -150,7 +157,7 @@ class GameManager:
         self.stdscr.timeout(-1)
         self.ctx.draw_game_board_edge()
         text1 = "Game Over!!!!"
-        text2 = "User: "+ self.ctx.current_player + "   Score: " + str(self.score_stack.get_size() + (self.current_level - 1) * MAX_SCORE)
+        text2 = "User: "+ self.ctx.current_player + "   Score: " + str(self.score_stack.get_size() + (self.current_level - 1) * MAX_SCORE_PER_LEVEL)
         text3 = "Press 'Enter' To Main Menu"
         # Display texts on screen
         center_scr_y = self.ctx.calculate_y_origin_from_center(0)
@@ -177,7 +184,7 @@ class GameManager:
             self.display_new_food()
     
     def verify_score(self):
-        if self.score_stack.get_size() >= MAX_SCORE:
+        if self.score_stack.get_size() >= MAX_SCORE_PER_LEVEL:
             self.level_up()
             self.stdscr.clear()
             # Display messaje
@@ -192,6 +199,7 @@ class GameManager:
             self.stdscr.clear()
             self.ctx.draw_game_board_edge()
             self.display_header_game()
+            self.display_footer_game()
 
             # Print snake
             self.snake.reset_snake()
@@ -204,7 +212,7 @@ class GameManager:
             self.delay(3000)
 
     def save_score(self):
-        self.ctx.add_score_to_history(self.score_stack.get_size() + (self.current_level - 1) * MAX_SCORE)
+        self.ctx.add_score_to_history(self.score_stack.get_size() + (self.current_level - 1) * MAX_SCORE_PER_LEVEL)
         self.ctx.add_last_score(self.snake.snake_body, self.score_stack)
     
     def game_over(self):
@@ -219,6 +227,7 @@ class GameManager:
 
         self.ctx.draw_game_board_edge()
         self.display_header_game()
+        self.display_footer_game()
         self.snake.display_body()
         self.display_new_food()
 

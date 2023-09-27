@@ -1,6 +1,8 @@
 digraph Queue {
 	graph [rankdir=LR]
-	n0x209df9e28c0 [label="{ ('pedro ', 0) | }" shape=record]
-	null0x209df16b580 [label="{ null }" shape=record]
-	n0x209df9e28c0 -> null0x209df16b580
+	n0x1849be054e0 [label="{ ('Juan', 0) | }" shape=record]
+	n0x1849bded7e0 [label="{ ('Juan', 29) | }" shape=record]
+	null0x1849b56b520 [label="{ null }" shape=record]
+	n0x1849be054e0 -> n0x1849bded7e0
+	n0x1849bded7e0 -> null0x1849b56b520
 }

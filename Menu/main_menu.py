@@ -6,7 +6,7 @@ from Menu.players_menu import PlayersMenu
 from Menu.report_menu import ReportMenu
 
 
-MAIN_MENU = ["1. Play", "2. Scoreboard", "3. User Selection", "4. Reports", "5. Exit"]
+MAIN_MENU = ["1. Play", "2. Scoreboard", "3. Select User", "4. Reports", "5. Exit"]
 
 class MenuOption():
     PLAY = 0
@@ -27,16 +27,24 @@ class MainMenu:
         self.stdscr = stdscr
         self.ctx = GameContext(stdscr) 
 
-    def select_main_menu_options(self, menu_option_selected):
-        # ************************* OPTION 1 - PLAY GAME *************************
+    def _start_game(self):
+        # Validating if a player is selected.
+        if not self.ctx.is_player_selected():
+            PlayersMenu(self.stdscr, self.ctx).start()
+        # Try to start game
+        if self.ctx.is_player_selected():
+            GameManager(self.stdscr, self.ctx).start_snake_game()
+        else:
+            self.ctx.print_message("No user selected.")
+
+    def _select_main_menu_options(self, menu_option_selected):
+        # ************************* OPTION 2 - PLAY GAME *************************
         if menu_option_selected == MenuOption.PLAY:
-            # Validating if a player is selected.
-            if self.ctx.validate_selected_user():
-                GameManager(self.stdscr, self.ctx).start_snake_game()
-        # ************************* OPTION 2 - SCORE BOARD *************************
+            self._start_game()
+        # ************************* OPTION 3 - SCORE BOARD *************************
         elif menu_option_selected == MenuOption.SCOREBOARD:
             self.ctx.print_scoreboard()
-        #************************* OPTION 3 USER SELECTION *************************
+        #************************* OPTION 1 USER SELECTION *************************
         elif menu_option_selected == MenuOption.USER_SELECTION:
             PlayersMenu(self.stdscr, self.ctx).start()
         # ************************* OPTION 4 - REPORTS *************************
@@ -54,7 +62,7 @@ class MainMenu:
             elif key == curses.KEY_DOWN: controll.next_option()
             # Select option
             elif key == curses.KEY_ENTER or key in [10,13]:
-                self.select_main_menu_options(controll.get_selected_option())
+                self._select_main_menu_options(controll.get_selected_option())
                 if controll.get_selected_option() == MenuOption.EXIT: break
             # Updating main menu
             self.ctx.display_options_menu(MAIN_MENU, controll.get_selected_option())

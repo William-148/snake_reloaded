@@ -7,10 +7,12 @@ from Collections.queue import Queue
 from Collections.stack import Stack
 from Utils.colors import Color
 from Utils.coordinate import Coordinate
+from Utils.data_persistence import read_local_score_history, read_local_user_data, write_local_score_history_queue, write_local_score_to_history, write_local_user
 
 
 class GameContext:
     REPORTS_DIRECTORY = 'Reports'
+    MAX_SIZE_SCORE_HISTORY = 10
 
     def __init__(self, stdscr) -> None:
         self.stdscr = stdscr
@@ -20,8 +22,16 @@ class GameContext:
         self.user_list = CircularList()
         self.score_history = Queue()
         self.set_limits_board()
+        self.load_users_from_file()
+        self.load_score_history_from_file()
         self.last_score = (DoublyLinkedList(), Stack())
         """Tuple: Index 0 is a 'DoublyLinkedList' class instance. Index 1 is 'Stack' class instance."""
+
+    def load_users_from_file(self):
+        read_local_user_data(lambda user: self.user_list.add_end(user))
+
+    def load_score_history_from_file(self):
+        read_local_score_history(lambda user, score: self.score_history.enqueue((user, score)))
         
     def set_limits_board(self):
         origin_x, origin_y = self.calculate_origin_from_center(self.board_width, self.board_height)
@@ -31,9 +41,14 @@ class GameContext:
         """Board end coordinate (instance of class 'Coordinate')"""
 
     def add_score_to_history(self, total_score: int) -> None:
-        self.score_history.enqueue((self.current_player, total_score))
-        if self.score_history.get_size() > 10:
+        if not self.is_player_selected(): return
+        user_score = (self.current_player, total_score)
+        self.score_history.enqueue(user_score)
+        if self.score_history.get_size() > GameContext.MAX_SIZE_SCORE_HISTORY:
             self.score_history.dequeue()
+            write_local_score_history_queue(self.score_history)
+        else:
+            write_local_score_to_history(user_score)
 
     def get_score_history(self): return self.score_history
 
@@ -46,15 +61,16 @@ class GameContext:
         """Select a player for the next game."""
         self.current_player = user_name
 
-    def register_player(self, user_name) -> None:
-        """Register a player by adding him to the player list."""
+    def register_player(self, user_name: str) -> None:
+        """Registers a player locally and adds him to the player list."""
         self.user_list.add_end(user_name)
+        write_local_user(user_name)
     
     def is_player_selected(self) -> bool:
         """Determine if a player has been selected for the next game."""
         return self.current_player is not None
     
-    def calculate_origin_from_center(self, element_width, element_height):
+    def calculate_origin_from_center(self, element_width, element_height) -> tuple[int, int]:
         """
         Calculates the origin coordinate of an element to be able to draw it in the center of the screen.
         Returns:
@@ -78,8 +94,12 @@ class GameContext:
         max_height, _ = self.stdscr.getmaxyx() 
         return max_height // 2 - element_height // 2
     
-    def get_game_board_origin(self):
+    def get_game_board_origin(self) -> tuple[int, int]:
         return self.calculate_origin_from_center(self.board_width, self.board_height)
+    
+    def get_game_board_end(self) -> tuple[int, int]:
+        x, y = self.calculate_origin_from_center(self.board_width, self.board_height)
+        return (x + self.board_width, y + self.board_height)
     
     def draw_game_board_edge(self):
         x, y = self.get_game_board_origin()
@@ -134,17 +154,6 @@ class GameContext:
         # Get resulting contents
         input_text = box.gather()
         return input_text
-    
-    def validate_selected_user(self):
-        """Returns: (bool) If a user is selected."""
-        if self.is_player_selected(): return True
-        user_name = self.print_input_box("No user selected. Enter user name: (Press Enter to play)")
-        if len(user_name) == 0: 
-            self.print_message("No user added.")
-            return False
-        self.register_player(user_name)
-        self.select_player(user_name)
-        return True
         
     def print_scoreboard(self):
         self.stdscr.clear()

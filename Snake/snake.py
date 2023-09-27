@@ -177,7 +177,7 @@ class Snake(IAffectableSnake):
             count += 1
     
     # Implemented Method
-    def kill(self) -> None: self.is_alive(False)
+    def kill(self) -> None: self.set_is_alive(False)
     
     def consume_item(self, item: Item):
         item.consume(self)

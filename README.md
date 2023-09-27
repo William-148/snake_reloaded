@@ -4,7 +4,7 @@ EDD_1S2019_P1
 
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg?logo=python)](https://www.python.org/downloads/release/python-3100/)
 [![Curses](https://img.shields.io/badge/curses-gray.svg?logo=python)](https://docs.python.org/3/library/curses.html)
-[![Curses](https://img.shields.io/badge/graphviz-gray.svg?logo=python)](https://graphviz.org/)
+[![Curses](https://img.shields.io/badge/graphviz-green.svg?logo=python)](https://graphviz.org/)
 
 ## Description:
 
@@ -39,7 +39,29 @@ You can run the application as follows:
 python main.py
 ```
 
-## DEVELOPER INFORMATION
+## User Interface
+
+### Main Menu
+
+![main menu](/assets/main_menu.png)
+
+### Game
+
+![game](/assets/game_play.png)
+
+### Scoreboard
+
+![scoreboard](/assets/scoreboard.png)
+
+### Select User
+
+![select user](/assets/select_user.png)
+
+### Reports Menu
+
+![reports menu](/assets/reports_menu.png)
+
+## Developer Information
 
 Name: William Enrique Cán Porón <br>
 Email: wilenrike@gmail.com<br>
