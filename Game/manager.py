@@ -53,7 +53,7 @@ class GameManager:
         count = 0
         while coordinate is None:
             coordinate = self.get_random_coordinate()
-            if self.snake.includes(coordinate) and self.items_score_list.includes(coordinate):
+            if self.snake.includes(coordinate) or self.items_score_list.includes(coordinate):
                 coordinate = None
             if count > 1000: break
             count += 1
