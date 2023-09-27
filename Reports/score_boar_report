@@ -1,0 +1,6 @@
+digraph Queue {
+	graph [rankdir=LR]
+	n0x209df9e28c0 [label="{ ('pedro ', 0) | }" shape=record]
+	null0x209df16b580 [label="{ null }" shape=record]
+	n0x209df9e28c0 -> null0x209df16b580
+}

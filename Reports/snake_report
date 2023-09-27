@@ -1,0 +1,18 @@
+digraph "Doubly Liked List" {
+	graph [rankdir=LR]
+	nullA0x20c371fc820 [label="{ null }" shape=record]
+	n0x20c371fd990 [label="{ | (49, 12) | }" shape=record]
+	n0x20c371fd690 [label="{ | (50, 12) | }" shape=record]
+	n0x20c371fd6f0 [label="{ | (51, 12) | }" shape=record]
+	n0x20c371fd5d0 [label="{ | (52, 12) | }" shape=record]
+	nullB0x20c371fc820 [label="{ null }" shape=record]
+	n0x20c371fd990 -> n0x20c371fd690
+	n0x20c371fd690 -> n0x20c371fd990 [color=blue]
+	n0x20c371fd690 -> n0x20c371fd6f0
+	n0x20c371fd6f0 -> n0x20c371fd690 [color=blue]
+	n0x20c371fd6f0 -> n0x20c371fd5d0
+	n0x20c371fd5d0 -> n0x20c371fd6f0 [color=blue]
+	nullA0x20c371fc820 -> n0x20c371fd990 [color=white]
+	n0x20c371fd990 -> nullA0x20c371fc820 [color=blue]
+	n0x20c371fd5d0 -> nullB0x20c371fc820
+}

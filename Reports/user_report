@@ -1,0 +1,26 @@
+digraph "Doubly Circular List" {
+	n0x1d198b00940 [label="{ dao  }" shape=record]
+	n0x1d198b00af0 [label="{ pe  }" shape=record]
+	n0x1d198b00b20 [label="{ Hola Mundo 12  }" shape=record]
+	n0x1d198b00a90 [label="{ Hola Perrito  }" shape=record]
+	n0x1d198b009d0 [label="{ padrino magico  }" shape=record]
+	n0x1d198b00c10 [label="{ Chocomax din  }" shape=record]
+	n0x1d198b00e50 [label="{ pedro infante  }" shape=record]
+	n0x1d198b00d60 [label="{ Gargaro  }" shape=record]
+	n0x1d198b00940 -> n0x1d198b00af0
+	n0x1d198b00af0 -> n0x1d198b00940 [color=blue]
+	n0x1d198b00af0 -> n0x1d198b00b20
+	n0x1d198b00b20 -> n0x1d198b00af0 [color=blue]
+	n0x1d198b00b20 -> n0x1d198b00a90
+	n0x1d198b00a90 -> n0x1d198b00b20 [color=blue]
+	n0x1d198b00a90 -> n0x1d198b009d0
+	n0x1d198b009d0 -> n0x1d198b00a90 [color=blue]
+	n0x1d198b009d0 -> n0x1d198b00c10
+	n0x1d198b00c10 -> n0x1d198b009d0 [color=blue]
+	n0x1d198b00c10 -> n0x1d198b00e50
+	n0x1d198b00e50 -> n0x1d198b00c10 [color=blue]
+	n0x1d198b00e50 -> n0x1d198b00d60
+	n0x1d198b00d60 -> n0x1d198b00e50 [color=blue]
+	n0x1d198b00d60 -> n0x1d198b00940
+	n0x1d198b00940 -> n0x1d198b00d60 [color=blue]
+}
